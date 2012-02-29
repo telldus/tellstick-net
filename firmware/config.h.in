@@ -1,0 +1,18 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#include "HardwareProfile.h"
+
+#cmakedefine BUILDING_MAC_WRITER
+#cmakedefine BUILDING_TELLSTICK_UPGRADER
+#cmakedefine BUILDING_TELLSTICK_NET
+
+#cmakedefine DEBUG
+
+#define MAC_SERVER "${MAC_SERVER}"
+
+#define TELLDUS_LIVE_PUBLIC_KEY "${TELLDUS_LIVE_PUBLIC_KEY}"
+#define TELLDUS_LIVE_SERVER "${TELLDUS_LIVE_SERVER}"
+#define TELLDUS_LIVE_PRIVATE_KEY "${TELLDUS_LIVE_PRIVATE_KEY}"
+
+#endif //CONFIG_H
