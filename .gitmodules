@@ -4,3 +4,6 @@
 [submodule "tcpip"]
 	path = tcpip
 	url = http://git.telldus.com/telldus-common.git
+[submodule "rf"]
+	path = rf
+	url = http://git.telldus.com/telldus-common.git
