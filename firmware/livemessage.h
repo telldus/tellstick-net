@@ -1,0 +1,26 @@
+void LMAppendChar(const char ch);
+void LMClear();
+
+void LMAppendString(const char *string);
+void LMAppendRomString(ROM BYTE *string);
+void LMAppendInt(unsigned long value);
+
+void LMStartHash();
+void LMAppendHashString(ROM BYTE *key, const char *value);
+void LMAppendHashHexString(const char *key, const char *value, const unsigned char length);
+void LMAppendHashInt(const char *key, unsigned long value);
+void LMEndHash();
+
+BOOL LMNextIsInt();
+unsigned long LMTakeInt();
+BOOL LMTakeString(BYTE* buffer, BYTE count);
+BOOL LMEnterHash();
+BOOL LMFindHashString(ROM BYTE *key);
+
+void LMParseChar(const char ch);
+
+BOOL LMHasPendingMessage();
+
+void LMSendToSocket();
+
+void LMPrintContent();

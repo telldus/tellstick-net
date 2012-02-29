@@ -23,6 +23,7 @@ SET(SOURCES
 	common.c
 	discovery.c
 	eeprom.c
+	livemessage.c
 	main.c
 	message.c
 	pwm.c
