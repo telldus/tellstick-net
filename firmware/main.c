@@ -5,6 +5,7 @@
 #include <htc.h>
 #include "common.h"
 #include "config.h"
+#include "discovery.h"
 #include "eeprom.h"
 #include "pwm.h"
 #include "receive.h"
@@ -134,6 +135,7 @@ int main() {
 			t = TickGet();
 		}
 		rfReceiveTask();
+		discoveryTask();
 		ClrWdt();
 	}
 	return 42;
