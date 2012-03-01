@@ -69,6 +69,10 @@ void initPwm() {
 // 	//Turn off the led
 	CCPR1L=0x0;
 	CCPR2L=0x0;
+
+	// Why is this really needed?
+	txd.pulses = 0;
+	rxd.pulses = 0;
 }
 
 void pwmUpdate() {
