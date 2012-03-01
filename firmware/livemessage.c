@@ -26,7 +26,7 @@ static BYTE bufferP;
 static BYTE hashStartP;
 static BYTE signature[20];
 static BYTE signature2[20];
-static ROM BYTE PRIVATE_KEY[] = TELLDUS_LIVE_PRIVATE_KEY;
+static ROM BYTE PRIVATE_KEY[] = "";
 
 void LMAppendChar(const char ch) {
 	char *pos = strchr(&buffer, '\0');

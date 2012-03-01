@@ -40,18 +40,6 @@
 #define RX_ANT_TRIS      (TRISF2)
 #define RX_ANT           (LATF2)
 
-#define VNC2_READY_READ_TRIS (TRISC1)
-#define VNC2_READY_READ      (LATC1)
-
-#define VNC2_RESET_TRIS (TRISC4)
-#define VNC2_RESET      (LATC4)
-
-#define VNC2_MONITOR_TRIS        (TRISC0)
-#define VNC2_MONITOR             (LATC0)
-
-#define VNC2_MONITOR_STATUS_TRIS (TRISC3)
-#define VNC2_MONITOR_STATUS      (RC3)
-
 #define DATA_BYTES       512
 
 #define GO GODONE
