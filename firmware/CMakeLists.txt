@@ -29,6 +29,7 @@ SET(SOURCES
 	pwm.c
 	rf.c
 	send.c
+	tellsticknet.c
 )
 
 IF(DEBUG)
