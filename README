@@ -1,1 +1,47 @@
-This is the source for the firmware for TellStick Net
+This is the source for the firmware for TellStick Net.
+The firmware must be compiled on a Linux machine.
+
+Prerequisites
+-------------
+
+The following software is required to build the firmware for TellStick Net.
+
+* Hi-Tech C Pro for the PIC18 MCU Family, version 9.63PL3 or later.
+  http://www.htsoft.com
+
+* CMake version 2.8.0 or later
+  http://www.cmake.org
+
+* Git
+  http://git-scm.com
+
+* atftp (for automatic firmware uploading)
+  ftp://ftp.mamalinux.com/pub/atftp/
+
+Prepare the source
+------------------
+
+Check out the source from the Telldus repository. We use submodules so
+they must also be initialized.
+
+  git clone http://git.telldus.com/tellstick-net.git
+	cd tellstick-net
+	git submodule init
+	git submodule update
+
+Compile the source
+------------------
+
+We recommend you do an "out of source" build. Create a folder and
+initiate a cmake build cache in it.
+
+  mkdir build
+	cd build
+	cmake ../firmware -DPICC18_PATH=<path to picc18> -DDEBUG=n -DDEVICE_ADDRESS=<ip address for TellStick Net>
+
+Now build the source.
+  make
+
+The buildscript automatically uploads the new firmware to the device after a successful build.
+If you don't need the automatic upload function, pass -DDO_BOOTLOADING_OVER_TCPIP=n when initiating
+the CMake cache.
