@@ -1,3 +1,10 @@
+//
+// Copyright (C) 2012 Telldus Technologies AB. All rights reserved.
+//
+// Copyright: See COPYING file that comes with this distribution
+//
+//
+
 #include "config.h"
 
 void delay_ms(int ms);

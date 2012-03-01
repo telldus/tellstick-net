@@ -1,3 +1,9 @@
+//
+// Copyright (C) 2012 Telldus Technologies AB. All rights reserved.
+//
+// Copyright: See COPYING file that comes with this distribution
+//
+//
 
 #define THIS_IS_STACK_APPLICATION
 #include "TCPIP Stack/Tick.h"
