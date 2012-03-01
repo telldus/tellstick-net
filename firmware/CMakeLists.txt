@@ -24,6 +24,7 @@ SET(SOURCES
 	discovery.c
 	eeprom.c
 	livemessage.c
+	localaccess.c
 	main.c
 	message.c
 	pwm.c
