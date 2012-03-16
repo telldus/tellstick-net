@@ -43,7 +43,8 @@ CONFIGURE_FILE(
 	${CMAKE_SOURCE_DIR}/config.h.in
 	${CMAKE_BINARY_DIR}/parsed/config.h
 )
-SET(CMAKE_EXE_LINKER_FLAGS "--runtime=+plib")
+
+LIST(APPEND CMAKE_EXE_LINKER_FLAGS "--runtime=+plib")
 LIST(APPEND CMAKE_C_FLAGS "--runtime=+plib")
 INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/parsed")
 
