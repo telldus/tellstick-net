@@ -7,6 +7,8 @@ Prerequisites
 The following software is required to build the firmware for TellStick Net.
 
 * Hi-Tech C Pro for the PIC18 MCU Family, version 9.63PL3 or later.
+  The version 9.80 seems to be incompatible with the TCP/IP stack. Use an earlier version
+	until this is resolved (read more: http://developer.telldus.com/ticket/206).
   http://www.htsoft.com
 
 * CMake version 2.8.0 or later
