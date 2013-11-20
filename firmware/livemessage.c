@@ -181,7 +181,7 @@ BOOL LMEnterHash() {
 }
 
 BOOL LMFindHashString(ROM BYTE *key) {
-	unsigned char k[4]; //Increase this if we need to search for longer keys
+	unsigned char k[9]; //Increase this if we need to search for longer keys
 
 	bufferP = hashStartP;
 	while(bufferP < sizeof(buffer)) {
