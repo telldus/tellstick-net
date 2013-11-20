@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2012 Telldus Technologies AB. All rights reserved.
+# Copyright (C) 2013 Telldus Technologies AB. All rights reserved.
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -40,10 +40,14 @@ if (ip == None):
 	print "No TellStick Net with correct firmware found"
 	sys.exit(1)
 
-print "Send Arctech code switch A1 turn on to %s" % ip
-protocol = '$k$k$k$k$k$k$k$k$k$k$k$k$k$k$k$k$k$k$kk$$kk$$kk$$k' #On
-#protocol = '$k$k$k$k$k$k$k$k$k$k$k$k$k$k$k$k$k$k$kk$$kk$$k$k$k' #Off
-msg = "4:sendh1:S%X:%ss" % (len(protocol), protocol)
-UDPSock.sendto(msg,(ip,42314))
+print "Send Arctech selflearning turn on to %s" % ip
 
+protocol = 'arctech'
+model = 'selflearning'
+house = 53103098
+unit = 0
+method = 2
+msg = "4:sendh8:protocol%X:%s5:model%X:%s5:housei%Xs4:uniti%Xs6:methodi%Xss" % (len(protocol), protocol, len(model), model, house, unit, method)
+
+UDPSock.sendto(msg,(ip,42314))
 sys.exit(0)
