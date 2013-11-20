@@ -11,6 +11,7 @@
 #include <htc.h>
 #include "common.h"
 #include "config.h"
+#include "debug.h"
 #include "discovery.h"
 #include "eeprom.h"
 #include "localaccess.h"
@@ -141,6 +142,9 @@ int main() {
 		if(TickGet() - t >= TICK_SECOND) {
 			t = TickGet();
 		}
+#if defined(DEBUG)
+		debugTask();
+#endif
 		rfReceiveTask();
 		discoveryTask();
 		localAccessTask();
