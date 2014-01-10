@@ -24,12 +24,14 @@ SET(SOURCES
 	discovery.c
 	eeprom.c
 	livemessage.c
+	localaccess.c
 	main.c
 	message.c
 	pwm.c
 	rf.c
 	send.c
 	tellsticknet.c
+	transmit_arctech.c
 )
 
 IF(DEBUG)

@@ -14,6 +14,7 @@
 #include "debug.h"
 #include "discovery.h"
 #include "eeprom.h"
+#include "localaccess.h"
 #include "pwm.h"
 #include "receive.h"
 #include "transmit.h"
@@ -146,6 +147,7 @@ int main() {
 #endif
 		rfReceiveTask();
 		discoveryTask();
+		localAccessTask();
 		ClrWdt();
 	}
 	return 42;

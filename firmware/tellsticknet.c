@@ -14,12 +14,14 @@
 #include "pwm.h"
 #include "send.h"
 #include "transmit.h"
+#include "transmit_arctech.h"
 
 void send() {
 	unsigned char pause = DEFAULT_PAUSE;
 	unsigned char repeats = DEFAULT_REPEATS;
 	unsigned char i, j;
 	unsigned long ack;
+	BYTE protocol[20] = "", model[20] = "";
 
 	if (!LMEnterHash()) {
 		return;
@@ -30,6 +32,19 @@ void send() {
 	}
 	if (LMFindHashString("R")) {
 		repeats = LMTakeInt();
+	}
+
+	if (LMFindHashString("protocol")) {
+		LMTakeString(&protocol, sizeof(protocol));
+
+		if (LMFindHashString("model")) {
+			LMTakeString(&model, sizeof(model));
+		}
+		if (strcmp(protocol, "arctech") != 0 || strcmp(model, "selflearning") != 0) {
+			return;
+		}
+		sendArctechSelflearning();
+		return;
 	}
 
 	if (!LMFindHashString("S")) {
