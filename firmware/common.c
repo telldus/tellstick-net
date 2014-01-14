@@ -6,6 +6,7 @@
 //
 
 #include <htc.h>
+#include "TCPIP Stack/TCPIP.h"
 #include "HardwareProfile.h"
 
 void delay_ms(int ms) {
@@ -56,4 +57,14 @@ unsigned char hexToByte(unsigned char hex) {
 			return 0xF;
 	}
 	return 0x0;
+}
+
+BOOL networkIsBound() {
+	if (DHCPIsBound(0)) {
+		return TRUE;
+	}
+	if (AppConfig.Flags.bIsDHCPEnabled) {
+		return FALSE;
+	}
+	return MACIsLinked();
 }

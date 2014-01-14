@@ -10,6 +10,7 @@
 #include "TCPIP Stack/Helpers.h"
 
 #include "common.h"
+#include "eeprom.h"
 #include "livemessage.h"
 #include "pwm.h"
 #include "send.h"
@@ -65,6 +66,69 @@ void send() {
 	rfStopTransmit();
 }
 
+void saveIp() {
+	if (AppConfig.Flags.bIsDHCPEnabled) {
+		config.ipAddr.Val = 0xFFFFFFFF;
+		config.netmask.Val = 0xFFFFFFFF;
+		config.gateway.Val = 0xFFFFFFFF;
+		config.dns1.Val = 0xFFFFFFFF;
+		config.dns2.Val = 0xFFFFFFFF;
+	} else {
+		config.ipAddr.Val = AppConfig.MyIPAddr.Val;
+		config.netmask.Val = AppConfig.MyMask.Val;
+		config.gateway.Val = AppConfig.MyGateway.Val;
+		config.dns1.Val = AppConfig.PrimaryDNSServer.Val;
+		config.dns2.Val = AppConfig.SecondaryDNSServer.Val;
+	}
+	saveEEPROM((unsigned char*)&config, sizeof(config));
+	Reset();
+}
+
+void setIp() {
+	IP_ADDR ip, netmask, gateway, dns1, dns2;
+
+	if (!LMEnterHash()) {
+		return;
+	}
+	if (!LMFindHashString("ip")) {
+		return;
+	}
+	ip.Val = LMTakeInt();
+	if (ip.Val == 0xFFFFFFFF) {
+		AppConfig.Flags.bIsDHCPEnabled = TRUE;
+		AppConfig.Flags.bInConfigMode = TRUE;
+		DHCPEnable(0);
+		return;
+	}
+
+	if (!LMFindHashString("netmask")) {
+		return;
+	}
+	netmask.Val = LMTakeInt();
+
+	if (!LMFindHashString("gateway")) {
+		return;
+	}
+	gateway.Val = LMTakeInt();
+
+	if (!LMFindHashString("dns1")) {
+		return;
+	}
+	dns1.Val = LMTakeInt();
+
+	if (!LMFindHashString("dns2")) {
+		return;
+	}
+	dns2.Val = LMTakeInt();
+
+	AppConfig.Flags.bIsDHCPEnabled = FALSE;
+	AppConfig.MyIPAddr.Val = ip.Val;
+	AppConfig.MyMask.Val = netmask.Val;
+	AppConfig.MyGateway.Val = gateway.Val;
+	AppConfig.PrimaryDNSServer.Val = dns1.Val;
+	AppConfig.SecondaryDNSServer.Val = dns2.Val;
+}
+
 void handleMessage() {
 	BYTE name[20] = "";
 
@@ -74,6 +138,10 @@ void handleMessage() {
 	}
 	if (strcmp(name, "send") == 0) {
 		send();
+	} else if (strcmp(name, "setip") == 0) {
+		setIp();
+	} else if (strcmp(name, "saveip") == 0) {
+		saveIp();
 	} else if (strcmp(name, "disconnect") == 0) {
 		Reset();
 	}

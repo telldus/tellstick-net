@@ -7,7 +7,7 @@
 
 #include <htc.h>
 #include "TCPIP Stack/TCPIP.h"
-
+#include "common.h"
 
 static char buffer[1024];
 static int p = 0;
@@ -43,7 +43,7 @@ void putch( char ch ) {
 }
 
 void debugTask() {
-	if (!DHCPIsBound(0)) {
+	if (!networkIsBound()) {
 		return;
 	}
 
