@@ -9,20 +9,21 @@
 
 #define LOCAL_ACCESS_PORT	42314
 
+UDP_SOCKET localSocket;
+
 void localAccessTask() {
 	static enum {
 		LA_RESET = 0,
 		LA_LISTEN
 	} state = LA_RESET;
 
-	static UDP_SOCKET	socket;
 	BYTE ch;
 
 	switch(state) {
 		case LA_RESET:
-			socket = UDPOpen(LOCAL_ACCESS_PORT, NULL, LOCAL_ACCESS_PORT);
+			localSocket = UDPOpen(LOCAL_ACCESS_PORT, NULL, LOCAL_ACCESS_PORT);
 
-			if(socket == INVALID_UDP_SOCKET) {
+			if(localSocket == INVALID_UDP_SOCKET) {
 				return;
 			} else {
 				state=LA_LISTEN;
@@ -31,13 +32,13 @@ void localAccessTask() {
 
 		case LA_LISTEN:
 			// Do nothing if no data is waiting
-			if(!UDPIsGetReady(socket)) {
+			if(!UDPIsGetReady(localSocket)) {
 				return;
 			}
 
 			// Read all data
 			LMClear();
-			while(UDPIsGetReady(socket)) {
+			while(UDPIsGetReady(localSocket)) {
 				UDPGet(&ch);
 				LMAppendChar(ch);
 			}

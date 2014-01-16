@@ -12,10 +12,48 @@
 #include "common.h"
 #include "eeprom.h"
 #include "livemessage.h"
+#include "localaccess.h"
 #include "pwm.h"
 #include "send.h"
 #include "transmit.h"
 #include "transmit_arctech.h"
+
+static UDP_PORT localPort;
+static UDP_SOCKET s = INVALID_UDP_SOCKET;
+static NODE_INFO	remote;
+
+void registerListener() {
+	memcpy(&remote, &UDPSocketInfo[localSocket].remote, sizeof(remote));
+	localPort = UDPSocketInfo[localSocket].remotePort;
+
+	if(s != INVALID_UDP_SOCKET) {
+		UDPClose(s);
+		s = INVALID_UDP_SOCKET;
+		return;
+	}
+}
+
+void sendToLocalListeners() {
+	int i, len;
+	char *b;
+
+	if(s == INVALID_UDP_SOCKET) {
+		s = UDPOpen(localPort, &remote, localPort);
+	}
+	if(s == INVALID_UDP_SOCKET) {
+		return;
+	}
+
+	if (!UDPIsPutReady(s)) {
+		return;
+	}
+	b = LMContent();
+	len = strlen(b);
+	for(i=0; i<len; ++i) {
+		UDPPut(b[i]);
+	}
+	UDPFlush();
+}
 
 void send() {
 	unsigned char pause = DEFAULT_PAUSE;
@@ -136,8 +174,10 @@ void handleMessage() {
 		printf("Could not handle message (to long?)\r\n");
 		return;
 	}
-	if (strcmp(name, "send") == 0) {
-		send();
+	if (strcmp(name, "reglistener") == 0) {
+		registerListener();
+	} else if (strcmp(name, "send") == 0) {
+			send();
 	} else if (strcmp(name, "setip") == 0) {
 		setIp();
 	} else if (strcmp(name, "saveip") == 0) {

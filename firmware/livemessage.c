@@ -181,7 +181,7 @@ BOOL LMEnterHash() {
 }
 
 BOOL LMFindHashString(ROM BYTE *key) {
-	unsigned char k[9]; //Increase this if we need to search for longer keys
+	unsigned char k[12]; //Increase this if we need to search for longer keys
 
 	bufferP = hashStartP;
 	while(bufferP < sizeof(buffer)) {
@@ -280,6 +280,10 @@ void LMParseChar(const char ch) {
 
 BOOL LMHasPendingMessage() {
 	return state == SM_MESSAGE_RECEIVED;
+}
+
+char *LMContent() {
+	return &buffer;
 }
 
 void LMPrintContent() {

@@ -30,4 +30,5 @@ BOOL LMHasPendingMessage();
 
 void LMSendToSocket();
 
+char *LMContent();
 void LMPrintContent();

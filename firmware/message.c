@@ -12,23 +12,33 @@
 #include <htc.h>
 #include <stdio.h>
 #include "common.h"
+#include "livemessage.h"
+#include "tellsticknet.h"
 
 void rfMessageBegin() {
 #ifdef DEBUG
 	printf("+R");
 #endif
+	LMClear();
+	LMAppendString("Data");
+	LMStartHash();
 }
 
 void rfMessageBeginRaw() {
 #ifdef DEBUG
 	printf("+RAW");
 #endif
+	LMClear();
+	LMAppendString("RawData");
+	LMStartHash();
 }
 
 void rfMessageEnd(unsigned char type) {
 #ifdef DEBUG
 	printf("\r\n");
 #endif
+	LMEndHash();
+	sendToLocalListeners();
 	setRXPulses(type);
 }
 
@@ -36,9 +46,11 @@ void rfMessageAddByte(const char *key, unsigned char value) {
 #ifdef DEBUG
 	printf("%s:%X;", key, value);
 #endif
+	LMAppendHashInt(key, value);
 }
 
 void rfMessageAddLong(const char *key, unsigned long value) {
+	LMAppendHashInt(key, value);
 #ifdef DEBUG
 	printf("%s:", key);
 
@@ -63,6 +75,7 @@ void rfMessageAddString(const char *key, const char *value) {
 #ifdef DEBUG
 	printf("%s:%s;", key, value);
 #endif
+	LMAppendHashString(key, value);
 }
 
 void rfMessageAddHexString(const char *key, const char *value, const unsigned char length) {
@@ -73,4 +86,5 @@ void rfMessageAddHexString(const char *key, const char *value, const unsigned ch
 	}
 	printf(";");
 #endif
+	LMAppendHashHexString(key, value, length);
 }
