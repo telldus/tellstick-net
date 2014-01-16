@@ -117,8 +117,8 @@ void LMAppendHashHexString(const char *key, const char *value, const unsigned ch
 	LMAppendChar('s');
 }
 
-void LMAppendHashInt(const char *key, unsigned long value) {
-	LMAppendString(key);
+void LMAppendHashInt(ROM BYTE *key, unsigned long value) {
+	LMAppendRomString(key);
 	LMAppendInt(value);
 }
 

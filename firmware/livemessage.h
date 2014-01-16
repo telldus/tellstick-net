@@ -15,7 +15,7 @@ void LMAppendInt(unsigned long value);
 void LMStartHash();
 void LMAppendHashString(ROM BYTE *key, const char *value);
 void LMAppendHashHexString(const char *key, const char *value, const unsigned char length);
-void LMAppendHashInt(const char *key, unsigned long value);
+void LMAppendHashInt(ROM BYTE *key, unsigned long value);
 void LMEndHash();
 
 BOOL LMNextIsInt();
