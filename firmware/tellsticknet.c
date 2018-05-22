@@ -21,11 +21,14 @@
 static UDP_PORT localPort;
 static UDP_SOCKET s = INVALID_UDP_SOCKET;
 static NODE_INFO	remote;
+static int listenerActive = 0;
 
 void registerListener() {
 	memcpy(&remote, &UDPSocketInfo[localSocket].remote, sizeof(remote));
 	localPort = UDPSocketInfo[localSocket].remotePort;
 
+	listenerActive = 1;
+	
 	if(s != INVALID_UDP_SOCKET) {
 		UDPClose(s);
 		s = INVALID_UDP_SOCKET;
@@ -37,6 +40,9 @@ void sendToLocalListeners() {
 	int i, len;
 	char *b;
 
+	/* Only transmit if at least one listener has registered */
+	if (!listenerActive) return;
+	
 	if(s == INVALID_UDP_SOCKET) {
 		s = UDPOpen(localPort, &remote, localPort);
 	}
