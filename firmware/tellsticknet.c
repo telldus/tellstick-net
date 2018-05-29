@@ -41,7 +41,9 @@ void sendToLocalListeners() {
 	char *b;
 
 	/* Only transmit if at least one listener has registered */
-	if (!listenerActive) return;
+	if (!listenerActive) {
+		return;
+	}
 	
 	if(s == INVALID_UDP_SOCKET) {
 		s = UDPOpen(localPort, &remote, localPort);
