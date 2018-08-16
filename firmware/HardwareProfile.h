@@ -42,8 +42,6 @@
 
 #define DATA_BYTES       512
 
-#define GO GODONE
-
 //Timeout after 3,156ms
 #define TMR_RELOAD_H     0x80
 #define TMR_RELOAD_L     0x00
