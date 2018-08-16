@@ -1,0 +1,15 @@
+stages:
+  - build
+
+build:
+  image: code.telldus.com:4567/products/tellstick-net/picc18:latest
+  stage: build
+  artifacts:
+    paths:
+      - TellStickNet.hex
+    expire_in: '1 mos'
+  variables:
+    GIT_SUBMODULE_STRATEGY: normal
+  script:
+    - cmake firmware -DPICC18_PATH=/usr/hitech/picc-18/pro/9.66/bin/picc18 -DDEBUG=n -DDO_BOOTLOADING_OVER_TCPIP=n
+    - make
